@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Switch, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Picker } from '@react-native-picker/picker';
 import '../src/i18n';
@@ -9,6 +9,8 @@ import { ThemedView } from '@/components/ThemedView';
 export default function Settings() {
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
+  const [autoChange, setAutoChange] = useState(true);
+  const [interval, setInterval] = useState(5); // domyślnie 5 sekund
 
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
@@ -17,7 +19,6 @@ export default function Settings() {
 
   return (
     <ThemedView style={styles.container}>
-
       <View style={styles.content}>
         <ThemedText style={styles.label}>{t('select_language')}</ThemedText>
         <Picker
@@ -29,6 +30,26 @@ export default function Settings() {
           <Picker.Item label="Polski" value="pl" />
           {/* Dodaj inne języki tutaj */}
         </Picker>
+
+        <View style={styles.switchContainer}>
+          <ThemedText style={styles.label}>{t('auto_change_words')}</ThemedText>
+          <Switch value={autoChange} onValueChange={setAutoChange} />
+        </View>
+
+        {autoChange && (
+          <View style={styles.intervalContainer}>
+            <ThemedText style={styles.label}>{t('change_interval_seconds')}</ThemedText>
+            <Picker
+              selectedValue={interval}
+              onValueChange={(itemValue) => setInterval(itemValue)}
+              style={styles.picker}
+            >
+              {[5, 10, 15, 20, 30].map((value) => (
+                <Picker.Item key={value} label={`${value}`} value={value} />
+              ))}
+            </Picker>
+          </View>
+        )}
       </View>
     </ThemedView>
   );
@@ -39,9 +60,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
-  header: {
-    marginBottom: 20,
-  },
   content: {
     flex: 1,
   },
@@ -51,5 +69,14 @@ const styles = StyleSheet.create({
   picker: {
     height: 50,
     width: '100%',
+  },
+  switchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+  },
+  intervalContainer: {
+    marginVertical: 10,
   },
 });

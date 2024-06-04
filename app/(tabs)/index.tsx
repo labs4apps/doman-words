@@ -10,6 +10,7 @@ import '../../src/i18n'; // Upewnij się, że ścieżka jest poprawna
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { router } from 'expo-router';
 
 export default function HomeScreen() {
   const { t } = useTranslation();
@@ -38,10 +39,10 @@ export default function HomeScreen() {
         </View>
       </View>
       <ThemedView style={styles.buttonContainer}>
-        <LevelButton title={t('4-letter')} level='4Letter' />
-        <LevelButton title={t('6-letter')}  level='6Letter' />
-        <LevelButton title={t('8-letter')}  level='8Letter' />
-        <LevelButton title={t('10-letter')}  level='10PlusLetter' />
+        <LevelButton title={t('4-letter')} level='4letter' />
+        <LevelButton title={t('6-letter')}  level='6letter' />
+        <LevelButton title={t('8-letter')}  level='8letter' />
+        <LevelButton title={t('10-letter')}  level='10letter' />
       </ThemedView>
     </ThemedView>
   );
