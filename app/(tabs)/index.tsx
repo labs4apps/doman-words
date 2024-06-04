@@ -1,70 +1,93 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+// app/(tabs)/index.tsx
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
+import React from 'react';
+import { View, StyleSheet, TouchableOpacity, Button, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '@/constants/Colors';
+import '../../src/i18n'; // Upewnij się, że ścieżka jest poprawna
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function HomeScreen() {
+  const { t } = useTranslation();
+  const navigation = useNavigation();
+  const colorScheme = useColorScheme();
+
+  const goToSettings = () => {
+    navigation.navigate('settings');
+  };
+  const navigateToLevel = (level: string) => {
+    navigation.navigate('level', { level });
+  };
+  const LevelButton = ({ title, level }: { title: string, level: string }) => (
+    <TouchableOpacity style={styles.levelButton} onPress={() => navigateToLevel(level)}>
+      <Text style={styles.buttonText}>{title}</Text>
+    </TouchableOpacity>
+  );
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
+    <ThemedView style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.headerLeft} />
+        <View style={styles.headerRight}>
+          <TouchableOpacity onPress={goToSettings} style={styles.iconButton}>
+            <Ionicons name="settings-outline" size={24} color={Colors[colorScheme ?? 'light'].tint} />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <ThemedView style={styles.buttonContainer}>
+        <LevelButton title={t('4-letter')} level='4Letter' />
+        <LevelButton title={t('6-letter')}  level='6Letter' />
+        <LevelButton title={t('8-letter')}  level='8Letter' />
+        <LevelButton title={t('10-letter')}  level='10PlusLetter' />
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+  },
+  header: {
+    width: '100%',
+    paddingTop: 20, // optional: to give some top space for status bar
+    paddingHorizontal: 10,
+    justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  headerLeft: {
+    flex: 1,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  headerRight: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+  iconButton: {
+    padding: 10,
+  },
+  titleContainer: {
+    padding: 20,
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  levelButton: {
+    backgroundColor: Colors.light.tint,
+    padding: 15,
+    marginVertical: 10,
+    borderRadius: 10,
+    width: '80%',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });

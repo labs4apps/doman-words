@@ -1,0 +1,18 @@
+{
+    "welcome": "Witaj!",
+    "settings": "Ustawienia",
+    "step1": "Step 1: Try it",
+    "step2": "Step 2: Explore",
+    "step3": "Step 3: Get a fresh start",
+    "editFile": "Edit {file} to see changes.",
+    "press": "Press {keys} to open developer tools.",
+    "exploreTab": "Tap the Explore tab to learn more about what's included in this starter app.",
+    "runCommand": "When you're ready, run {command} to get a fresh {app} directory. This will move the current {app} to {appExample}.",
+    "4-letter": "4 literowy poziom",
+    "6-letter": "6 literowy poziom",
+    "8-letter": "8 literowy poziom",
+    "10-letter": "10 liter i więcej",
+    "select_language": "Wybierz język",
+    "home": "strona główna"
+  }
+  
