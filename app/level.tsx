@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { ThemedView } from '@/components/ThemedView';
 import { loadWords } from '@/src/utils/dataLoader';
@@ -11,12 +11,12 @@ export default function Level() {
   const { language, autoChange, interval } = useSettings();
   const [words, setWords] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { width, height } = useWindowDimensions(); // Get the width and height of the screen
 
   useEffect(() => {
     const loadData = async () => {
       const loadedWords = await loadWords(language, level);
       setWords(loadedWords);
-      console.log(loadedWords)
       setCurrentIndex(Math.floor(Math.random() * loadedWords.length)); // Set initial index to a random word
     };
     loadData();
@@ -38,10 +38,20 @@ export default function Level() {
     setCurrentIndex(Math.floor(Math.random() * words.length)); // Set index to a random word
   };
 
+  const getDynamicFontSize = (word: string) => {
+    // More aggressive formula to ensure larger font size
+    const baseFontSize = (width) / word.length; 
+    return Math.min(baseFontSize); 
+  };
+
   return (
     <TouchableOpacity style={styles.container} onPress={handleNextWord} disabled={autoChange}>
       <ThemedView style={styles.wordContainer}>
-        <Text style={styles.wordText}>{words[currentIndex]}</Text>
+        {words.length > 0 && (
+          <Text style={[styles.wordText, { fontSize: getDynamicFontSize(words[currentIndex]) }]}>
+            {words[currentIndex]}
+          </Text>
+        )}
       </ThemedView>
     </TouchableOpacity>
   );
@@ -60,7 +70,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wordText: {
-    fontSize: '900%',
     textAlign: 'center',
   },
 });
