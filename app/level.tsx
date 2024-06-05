@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wordText: {
-    fontSize: 48,
+    fontSize: '900%',
     textAlign: 'center',
   },
 });
