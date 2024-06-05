@@ -13,6 +13,8 @@
     "8-letter": "8 literowy poziom",
     "10-letter": "10 liter i więcej",
     "select_language": "Wybierz język",
-    "home": "strona główna"
+    "home": "strona główna",
+    "auto_change_words": "Zmieniaj słowa automatycznie",
+    "change_interval_seconds": "Po jakim czasie nowe słowo"
   }
   

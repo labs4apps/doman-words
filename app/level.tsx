@@ -1,10 +1,9 @@
-// app/screens/level.tsx
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { ThemedView } from '@/components/ThemedView';
 import { loadWords } from '@/src/utils/dataLoader';
-import { useSettings } from '@/hooks/useSettings'; // assuming you have a custom hook for accessing settings
+import { useSettings } from '@/providers/settingsProvider';
 
 export default function Level() {
   const route = useRoute();
@@ -17,6 +16,8 @@ export default function Level() {
     const loadData = async () => {
       const loadedWords = await loadWords(language, level);
       setWords(loadedWords);
+      console.log(loadedWords)
+      setCurrentIndex(Math.floor(Math.random() * loadedWords.length)); // Set initial index to a random word
     };
     loadData();
   }, [language, level]);
@@ -25,7 +26,7 @@ export default function Level() {
     let timer: NodeJS.Timeout;
     if (autoChange) {
       timer = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
+        setCurrentIndex(Math.floor(Math.random() * words.length)); // Set index to a random word
       }, interval * 1000);
     }
     return () => {
@@ -34,7 +35,7 @@ export default function Level() {
   }, [autoChange, interval, words]);
 
   const handleNextWord = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
+    setCurrentIndex(Math.floor(Math.random() * words.length)); // Set index to a random word
   };
 
   return (

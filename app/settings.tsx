@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+// app/screens/Settings.tsx
+import React from 'react';
 import { View, StyleSheet, Switch, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Picker } from '@react-native-picker/picker';
 import '../src/i18n';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useSettings } from '@/providers/settingsProvider';
 
 export default function Settings() {
   const { t, i18n } = useTranslation();
-  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
-  const [autoChange, setAutoChange] = useState(true);
-  const [interval, setInterval] = useState(5); // domyślnie 5 sekund
+  const { language, setLanguage, autoChange, setAutoChange, interval, setInterval } = useSettings();
 
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
-    setSelectedLanguage(language);
+    setLanguage(language);
   };
 
   return (
@@ -22,7 +22,7 @@ export default function Settings() {
       <View style={styles.content}>
         <ThemedText style={styles.label}>{t('select_language')}</ThemedText>
         <Picker
-          selectedValue={selectedLanguage}
+          selectedValue={language}
           onValueChange={(itemValue) => changeLanguage(itemValue)}
           style={styles.picker}
         >

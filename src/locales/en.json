@@ -13,6 +13,8 @@
     "8-letter": "8 letter level",
     "10-letter": "10 letter and more",
     "select_language": "Select language",
-    "home": "home"
+    "home": "home",
+    "auto_change_words": "Auto change words",
+    "change_interval_seconds": "Change interval seconds"
   }
   
