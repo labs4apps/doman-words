@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    paddingTop: 20, // optional: to give some top space for status bar
+    paddingTop: 60, // optional: to give some top space for status bar
     paddingHorizontal: 10,
     justifyContent: 'space-between',
     flexDirection: 'row',

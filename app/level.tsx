@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, useWindowDimensions } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, useWindowDimensions, useColorScheme } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { ThemedView } from '@/components/ThemedView';
 import { loadWords } from '@/src/utils/dataLoader';
@@ -12,6 +12,7 @@ export default function Level() {
   const [words, setWords] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const { width, height } = useWindowDimensions(); // Get the width and height of the screen
+  const colorScheme = useColorScheme(); // Get the current color scheme
 
   useEffect(() => {
     const loadData = async () => {
@@ -44,11 +45,13 @@ export default function Level() {
     return Math.min(baseFontSize); 
   };
 
+  const textColor = colorScheme === 'dark' ? 'white' : 'black'; // Determine text color based on color scheme
+
   return (
     <TouchableOpacity style={styles.container} onPress={handleNextWord} disabled={autoChange}>
       <ThemedView style={styles.wordContainer}>
         {words.length > 0 && (
-          <Text style={[styles.wordText, { fontSize: getDynamicFontSize(words[currentIndex]) }]}>
+          <Text style={[styles.wordText, { fontSize: getDynamicFontSize(words[currentIndex]), color: textColor }]}>
             {words[currentIndex]}
           </Text>
         )}
