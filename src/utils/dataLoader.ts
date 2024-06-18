@@ -11,7 +11,27 @@ export const loadWords = async (language: string, level: string): Promise<string
     console.log('Loaded words:', words);
     return words;
   } catch (error) {
-    console.error('Error loading words:', error);
-    return [];
+    const fileName = `${language}_${level}`
+    console.log(fileName)
+    let words;
+    if(fileName == 'en_4letter'){
+      words = require('../../public/assets/words/en_4letter.json')
+    } else if(fileName == 'en_6letter') {
+      words = require('../../public/assets/words/en_6letter.json')
+    } else if(fileName == 'en_8letter') {
+      words = require('../../public/assets/words/en_8letter.json')
+    } else if(fileName == 'en_10letter') {
+      words = require('../../public/assets/words/en_10letter.json')
+    } else if(fileName == 'pl_4letter') {
+      words = require('../../public/assets/words/pl_4letter.json')
+    } else if(fileName == 'pl_6letter') {
+      words = require('../../public/assets/words/pl_6letter.json')
+    } else if(fileName == 'pl_8letter') {
+      words = require('../../public/assets/words/pl_8letter.json')
+    } else if(fileName == 'pl_10letter') {
+      words = require('../../public/assets/words/pl_10letter.json')
+    }
+    // console.error('Error loading words:', error);
+    return words;
   }
 };
