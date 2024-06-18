@@ -8,11 +8,9 @@ export const loadWords = async (language: string, level: string): Promise<string
 
     const text = await response.text();
     const words = text.split('\n').map(word => word.trim()).filter(word => !!word);
-    console.log('Loaded words:', words);
     return words;
   } catch (error) {
     const fileName = `${language}_${level}`
-    console.log(fileName)
     let words;
     if(fileName == 'en_4letter'){
       words = require('../../public/assets/words/en_4letter.json')
